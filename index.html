@@ -953,6 +953,262 @@
 
     .test-complete strong { color: var(--color-accent); }
 
+    /* PRACTICE WIZARD */
+    .practice-setup {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 48px 24px;
+      min-height: 380px;
+    }
+
+    .practice-setup-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 18px;
+      background: var(--color-accent-soft);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .practice-setup-icon i { font-size: 32px; color: var(--color-accent); }
+
+    .practice-setup h3 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .practice-setup p {
+      font-size: 13px;
+      color: var(--color-text-secondary);
+      max-width: 320px;
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+
+    .practice-exam-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 99px;
+      background: var(--color-accent-soft);
+      color: var(--color-accent);
+      font-size: 11px;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .practice-stepper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    .practice-step {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--color-text-muted);
+      padding: 6px 10px;
+      border-radius: 99px;
+      border: 1px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .practice-step.active {
+      color: var(--color-accent);
+      background: var(--color-accent-soft);
+      border-color: rgba(157, 141, 247, 0.25);
+    }
+
+    .practice-step.done { color: var(--color-success); }
+
+    .practice-step-num {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+    }
+
+    .practice-step.active .practice-step-num {
+      background: var(--color-accent);
+      color: #fff;
+    }
+
+    .practice-step.done .practice-step-num {
+      background: var(--color-success-bg);
+      color: var(--color-success);
+    }
+
+    .practice-step-arrow { color: var(--color-text-muted); font-size: 10px; }
+
+    .practice-wizard-step { display: none; }
+    .practice-wizard-step.active { display: block; animation: fadeIn 0.25s ease; }
+
+    .practice-subject-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .practice-subject-card {
+      padding: 16px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-surface);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.2s;
+      font-family: var(--font-sans);
+      color: var(--color-text-primary);
+    }
+
+    .practice-subject-card:hover {
+      border-color: var(--color-border-hover);
+      background: var(--color-bg-hover);
+    }
+
+    .practice-subject-card.selected {
+      border-color: rgba(157, 141, 247, 0.4);
+      background: var(--color-accent-soft);
+      box-shadow: 0 0 0 1px rgba(157, 141, 247, 0.2);
+    }
+
+    .practice-subject-card strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .practice-subject-card span {
+      font-size: 11px;
+      color: var(--color-text-muted);
+    }
+
+    .practice-topic-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      max-height: 280px;
+      overflow-y: auto;
+      margin-bottom: 8px;
+    }
+
+    .practice-count-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .practice-count-btn {
+      padding: 18px 12px;
+      border-radius: var(--radius-md);
+      border: 1px solid var(--color-border);
+      background: var(--color-bg-surface);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .practice-count-btn:hover { border-color: var(--color-border-hover); }
+
+    .practice-count-btn.selected {
+      border-color: rgba(157, 141, 247, 0.4);
+      background: var(--color-accent-soft);
+    }
+
+    .practice-count-btn strong {
+      display: block;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--color-accent);
+      letter-spacing: -0.03em;
+    }
+
+    .practice-count-btn span {
+      font-size: 11px;
+      color: var(--color-text-muted);
+      font-weight: 500;
+    }
+
+    .practice-wizard-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      flex-wrap: wrap;
+    }
+
+    .practice-selection-summary {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      padding: 10px 12px;
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: var(--radius-sm);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .practice-selection-summary strong { color: var(--color-accent); }
+
+    .practice-session-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .practice-session-meta {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      font-weight: 500;
+    }
+
+    .practice-session-progress {
+      flex: 1;
+      min-width: 120px;
+      max-width: 200px;
+    }
+
+    .practice-session-progress .progress-track { height: 6px; }
+
+    .practice-session-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .practice-session-tag {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 99px;
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      color: var(--color-text-muted);
+    }
+
     .sr-only {
       position: absolute;
       width: 1px;
@@ -1034,7 +1290,7 @@
 
         <div class="section-title">Quick actions</div>
         <div class="quick-actions">
-          <button class="quick-action-btn" onclick="showPanel('practice',document.querySelector('[onclick*=practice]'))"><i class="ti ti-pencil" aria-hidden="true"></i> Practice questions</button>
+          <button class="quick-action-btn" onclick="showPanel('practice',document.querySelector('.nav-item:nth-child(3)'));openPracticeWizard()"><i class="ti ti-pencil" aria-hidden="true"></i> Practice questions</button>
           <button class="quick-action-btn" onclick="showPanel('doubt',document.querySelector('[onclick*=doubt]'))"><i class="ti ti-message-circle-question" aria-hidden="true"></i> Ask a doubt</button>
           <button class="quick-action-btn" onclick="showPanel('test',document.querySelector('.nav-item:nth-child(4)'))"><i class="ti ti-file-check" aria-hidden="true"></i> Take custom test</button>
           <button class="quick-action-btn" onclick="showPanel('youtube',document.querySelector('[onclick*=youtube]'))"><i class="ti ti-player-play" aria-hidden="true"></i> Watch lessons</button>
@@ -1056,9 +1312,55 @@
       </div>
 
       <div class="panel" id="panel-practice">
-        <div class="subject-chips" id="practice-chips"></div>
-        <div id="practice-content"></div>
-        <button class="btn-primary" onclick="loadPracticeQuestion()" style="margin-top:10px">Next question</button>
+        <div id="practice-setup-view">
+          <div class="practice-setup">
+            <span class="practice-exam-badge" id="practice-exam-badge"><i class="ti ti-certificate" aria-hidden="true"></i> CUET-UG</span>
+            <div class="practice-setup-icon"><i class="ti ti-pencil" aria-hidden="true"></i></div>
+            <h3>Practice by topic</h3>
+            <p>Choose a subject, pick chapters you want to focus on, then set how many questions to practice.</p>
+            <button class="btn-primary" onclick="openPracticeWizard()" style="padding:12px 28px;font-size:13px">Start practice</button>
+          </div>
+        </div>
+
+        <div id="practice-wizard-view" style="display:none">
+          <div class="practice-stepper" id="practice-stepper"></div>
+          <div class="practice-wizard-step active" id="practice-step-subject">
+            <div class="section-title">Step 1 — Select subject</div>
+            <p style="font-size:12px;color:var(--color-text-muted);margin-bottom:12px">Subjects for <strong id="practice-wizard-exam" style="color:var(--color-accent)">CUET-UG</strong></p>
+            <div class="practice-subject-grid" id="practice-subject-grid"></div>
+          </div>
+          <div class="practice-wizard-step" id="practice-step-topics">
+            <div class="section-title">Step 2 — Select topics / chapters</div>
+            <p style="font-size:12px;color:var(--color-text-muted);margin-bottom:12px">Subject: <strong id="practice-selected-subject-label" style="color:var(--color-accent)">—</strong></p>
+            <div class="practice-topic-grid" id="practice-topic-grid"></div>
+            <button class="btn-outline" type="button" onclick="selectAllPracticeTopics()" style="margin-top:8px">Select all topics</button>
+          </div>
+          <div class="practice-wizard-step" id="practice-step-count">
+            <div class="section-title">Step 3 — How many questions?</div>
+            <div class="practice-selection-summary" id="practice-count-summary"></div>
+            <div class="practice-count-grid" id="practice-count-grid"></div>
+          </div>
+          <div class="practice-wizard-actions">
+            <button class="btn-outline" type="button" id="practice-wizard-back" onclick="practiceWizardBack()">Back</button>
+            <button class="btn-primary" type="button" id="practice-wizard-next" onclick="practiceWizardNext()">Continue</button>
+          </div>
+        </div>
+
+        <div id="practice-active-view" style="display:none">
+          <div class="practice-session-header">
+            <div class="practice-session-meta">Question <span id="practice-q-current">1</span> of <span id="practice-q-total">10</span></div>
+            <div class="practice-session-progress">
+              <div class="progress-track"><div class="progress-fill" id="practice-session-fill" style="width:0%"></div></div>
+            </div>
+            <button class="btn-outline" type="button" onclick="endPracticeSession()" style="padding:6px 12px;font-size:11px">End session</button>
+          </div>
+          <div class="practice-session-tags" id="practice-session-tags"></div>
+          <div id="practice-content"></div>
+          <div style="display:flex;gap:10px;margin-top:14px;flex-wrap:wrap">
+            <button class="btn-outline" type="button" onclick="toggleExplanation()">Show explanation</button>
+            <button class="btn-primary" type="button" id="practice-next-btn" onclick="nextPracticeQuestion()">Next question</button>
+          </div>
+        </div>
       </div>
 
       <div class="panel" id="panel-test">
@@ -1177,10 +1479,15 @@ const SAMPLE_QUESTIONS = {
     {q:'If f(x) = x² + 2x + 1, then f\'(x) is:', opts:['2x + 2','x² + 2','2x','x + 2'], ans:0, exp:'Differentiating f(x) = x² + 2x + 1 term by term: d/dx(x²) = 2x, d/dx(2x) = 2, d/dx(1) = 0. So f\'(x) = 2x + 2.', diff:'Easy', topic:'Calculus'},
     {q:'The determinant of matrix [[2,3],[1,4]] equals:', opts:['5','8','11','−5'], ans:0, exp:'det([[a,b],[c,d]]) = ad - bc = (2)(4) - (3)(1) = 8 - 3 = 5.', diff:'Easy', topic:'Matrices'},
     {q:'In a class of 60 students, probability of selecting a girl is 2/5. How many girls?', opts:['24','36','20','30'], ans:0, exp:'Number of girls = (2/5) × 60 = 24.', diff:'Medium', topic:'Probability'},
+    {q:'If (a,b) R (b,c) then (a,c) R defines a:', opts:['Symmetric relation','Transitive relation','Reflexive relation','Equivalence only'], ans:1, exp:'Transitivity: if (a,b) and (b,c) belong to R, then (a,c) must belong to R.', diff:'Medium', topic:'Relations & Functions'},
+    {q:'∫ x dx equals:', opts:['x²/2 + C','x + C','2x + C','x² + C'], ans:0, exp:'∫ x dx = x²/2 + C by power rule.', diff:'Easy', topic:'Calculus'},
+    {q:'|a⃗ + b⃗| ≤ |a⃗| + |b⃗| is the:', opts:['Triangle inequality','Parallelogram law','Dot product','Cross product'], ans:0, exp:'Triangle inequality for vectors: magnitude of sum ≤ sum of magnitudes.', diff:'Medium', topic:'Vectors & 3D Geometry'},
   ],
   Physics: [
     {q:'A charge of 2μC is placed in a uniform electric field E = 3×10⁴ N/C. The force on the charge is:', opts:['0.06 N','0.6 N','6 N','60 N'], ans:0, exp:'F = qE = 2×10⁻⁶ × 3×10⁴ = 6×10⁻² = 0.06 N.', diff:'Medium', topic:'Electrostatics'},
-    {q:'Which law states that the induced EMF opposes the change in flux?', opts:['Faraday\'s Law','Lenz\'s Law','Ampere\'s Law','Ohm\'s Law'], ans:1, exp:'Lenz\'s Law states that the direction of induced current is such that it opposes the cause that produces it (change in magnetic flux).', diff:'Easy', topic:'Electromagnetic Induction'},
+    {q:'Which law states that the induced EMF opposes the change in flux?', opts:['Faraday\'s Law','Lenz\'s Law','Ampere\'s Law','Ohm\'s Law'], ans:1, exp:'Lenz\'s Law states that the induced current opposes the change in magnetic flux.', diff:'Easy', topic:'EM Induction & AC'},
+    {q:'Ohm\'s law is V = IR. If R doubles and I is constant, V becomes:', opts:['Half','Double','Same','Zero'], ans:1, exp:'V = IR, so V is directly proportional to R when I is fixed.', diff:'Easy', topic:'Current Electricity'},
+    {q:'The unit of electric flux is:', opts:['N·m²/C','J/C','V/m','A/m'], ans:0, exp:'Electric flux Φ_E has SI unit N·m²/C (volt-metre).', diff:'Medium', topic:'Electrostatics'},
   ],
   Chemistry: [
     {q:'Which colligative property is used to find molecular mass of solute?', opts:['All of these','Elevation of boiling point','Depression of freezing point','Osmotic pressure'], ans:0, exp:'All four colligative properties can be used to determine molecular mass, as they depend only on number of solute particles.', diff:'Medium', topic:'Solutions'},
@@ -1191,8 +1498,31 @@ const SAMPLE_QUESTIONS = {
   ],
   English: [
     {q:'Choose the word most similar in meaning to "Ephemeral":', opts:['Eternal','Transient','Permanent','Robust'], ans:1, exp:'"Ephemeral" means lasting for a very short time. "Transient" is the closest synonym.', diff:'Medium', topic:'Vocabulary'},
+    {q:'In reading comprehension, the main idea of a passage is usually found in:', opts:['Footnotes only','First or last paragraph','Middle sentence always','Title alone'], ans:1, exp:'The main idea is typically stated in the introduction or conclusion of a passage.', diff:'Easy', topic:'Reading Comprehension'},
+    {q:'Choose the correctly spelled word:', opts:['Accomodate','Accommodate','Acommodate','Acomodate'], ans:1, exp:'"Accommodate" follows the rule: double C, double M.', diff:'Easy', topic:'Verbal Ability'},
+  ],
+  'General Knowledge': [
+    {q:'Who is the current President of India (as per standard GK sets)?', opts:['Dr. Rajendra Prasad','Droupadi Murmu','Pratibha Patil','APJ Abdul Kalam'], ans:1, exp:'Droupadi Murmu is the President of India (2022 onwards).', diff:'Easy', topic:'Static GK'},
+    {q:'GDP stands for:', opts:['Gross Domestic Product','General Domestic Price','Global Development Plan','Government Debt Percentage'], ans:0, exp:'GDP = Gross Domestic Product, the total value of goods and services produced in a country.', diff:'Easy', topic:'Numerical Aptitude'},
+  ],
+  'General Science': [
+    {q:'Speed of light in vacuum is approximately:', opts:['3×10⁸ m/s','3×10⁶ m/s','3×10¹⁰ m/s','3×10⁴ m/s'], ans:0, exp:'c ≈ 3 × 10⁸ m/s in vacuum.', diff:'Easy', topic:'Physics'},
+    {q:'pH of pure water at 25°C is:', opts:['0','7','14','1'], ans:1, exp:'Pure water is neutral with pH = 7 at 25°C.', diff:'Easy', topic:'Chemistry'},
+  ],
+  'History & Civics': [
+    {q:'The Indian Constitution was adopted on:', opts:['26 January 1950','26 November 1949','15 August 1947','2 October 1948'], ans:1, exp:'Constitution adopted 26 Nov 1949; came into force 26 Jan 1950.', diff:'Medium', topic:'Indian Constitution'},
+    {q:'Quit India Movement was launched in:', opts:['1942','1930','1920','1947'], ans:0, exp:'Quit India Movement (Bharat Chodo Andolan) began in August 1942.', diff:'Easy', topic:'Freedom Movement'},
+  ],
+  Geography: [
+    {q:'The longest river in India is:', opts:['Ganga','Yamuna','Godavari','Indus'], ans:0, exp:'Ganga is the longest river flowing entirely within India.', diff:'Easy', topic:'Indian Geography'},
+    {q:'Tropic of Cancer passes through how many Indian states?', opts:['6','8','10','4'], ans:1, exp:'Tropic of Cancer passes through 8 Indian states including Gujarat, Rajasthan, MP, etc.', diff:'Medium', topic:'Physical Geography'},
+  ],
+  'Current Affairs': [
+    {q:'Which organization releases the Human Development Index (HDI)?', opts:['IMF','UNDP','WHO','WTO'], ans:1, exp:'UNDP publishes the Human Development Index annually.', diff:'Medium', topic:'International Events'},
   ],
 };
+
+const PRACTICE_COUNT_OPTIONS = [5, 10, 15, 20, 25, 30];
 
 const YT_VIDEOS = {
   Mathematics: [
@@ -1233,7 +1563,11 @@ let currentExam = 'CUET-UG';
 let currentDoubtSubject = 'Mathematics';
 let currentPracticeSubject = 'Mathematics';
 let currentYTSubject = 'Mathematics';
-let practiceQIdx = 0;
+let practiceWizardStep = 1;
+let practiceSelectedTopics = {};
+let practiceQuestionCount = 10;
+let practiceSessionQuestions = [];
+let practiceSessionIdx = 0;
 let selectedAnswer = null;
 let testQNum = 0;
 let testQuestions = [];
@@ -1257,6 +1591,8 @@ function setExam(el, exam) {
   renderYTSuggestions();
   renderSyllabus();
   updateStats();
+  updatePracticeExamBadge();
+  if (!practiceSessionQuestions.length) resetPracticeToSetup();
 }
 
 function showPanel(id, navEl) {
@@ -1267,24 +1603,310 @@ function showPanel(id, navEl) {
   const titles = {dashboard:'Dashboard', doubt:'Ask Doubt', practice:'Practice Questions', test:'Custom Test', material:'Study Material', youtube:'Video Lessons', syllabus:'Syllabus'};
   document.getElementById('topbar-title').textContent = titles[id] || id;
   if (id === 'youtube') renderYTSuggestions();
-  if (id === 'practice') renderPracticeQuestion();
+  if (id === 'practice') renderPracticePanel();
 }
 
 function renderChips() {
   const subjects = EXAMS[currentExam].subjects;
-  ['doubt-chips','practice-chips','yt-chips'].forEach((containerId, i) => {
+  ['doubt-chips','yt-chips'].forEach((containerId, i) => {
     const el = document.getElementById(containerId);
-    const curr = i === 0 ? currentDoubtSubject : i === 1 ? currentPracticeSubject : currentYTSubject;
+    const curr = i === 0 ? currentDoubtSubject : currentYTSubject;
     el.innerHTML = subjects.map(s => `<button class="chip ${s===curr?'active':''}" onclick="setSubject('${containerId}','${s}')">${s}</button>`).join('');
   });
 }
 
 function setSubject(containerId, subject) {
   if (containerId === 'doubt-chips') currentDoubtSubject = subject;
-  else if (containerId === 'practice-chips') { currentPracticeSubject = subject; practiceQIdx = 0; selectedAnswer = null; renderPracticeQuestion(); }
   else if (containerId === 'yt-chips') { currentYTSubject = subject; renderYTSuggestions(); }
   document.querySelectorAll(`#${containerId} .chip`).forEach(c => c.classList.remove('active'));
   event.target.classList.add('active');
+}
+
+function updatePracticeExamBadge() {
+  const badge = document.getElementById('practice-exam-badge');
+  const wizardExam = document.getElementById('practice-wizard-exam');
+  if (badge) badge.innerHTML = `<i class="ti ti-certificate" aria-hidden="true"></i> ${currentExam}`;
+  if (wizardExam) wizardExam.textContent = currentExam;
+}
+
+function renderPracticePanel() {
+  updatePracticeExamBadge();
+  if (practiceSessionQuestions.length) {
+    showPracticeView('active');
+    renderPracticeSessionQuestion();
+  } else if (practiceWizardStep > 0 && document.getElementById('practice-wizard-view').style.display !== 'none') {
+    showPracticeView('wizard');
+    renderPracticeStepper();
+  } else {
+    resetPracticeToSetup();
+  }
+}
+
+function resetPracticeToSetup() {
+  practiceWizardStep = 0;
+  practiceSessionQuestions = [];
+  practiceSessionIdx = 0;
+  practiceSelectedTopics = {};
+  selectedAnswer = null;
+  showPracticeView('setup');
+  restorePracticeSetupDefault();
+}
+
+function showPracticeView(view) {
+  document.getElementById('practice-setup-view').style.display = view === 'setup' ? 'block' : 'none';
+  document.getElementById('practice-wizard-view').style.display = view === 'wizard' ? 'block' : 'none';
+  document.getElementById('practice-active-view').style.display = view === 'active' ? 'block' : 'none';
+}
+
+function openPracticeWizard() {
+  practiceWizardStep = 1;
+  const subjects = EXAMS[currentExam].subjects;
+  currentPracticeSubject = subjects.includes(currentPracticeSubject) ? currentPracticeSubject : subjects[0];
+  showPracticeView('wizard');
+  renderPracticeStepper();
+  renderPracticeSubjects();
+  showPracticeWizardStep(1);
+}
+
+function renderPracticeStepper() {
+  const steps = [
+    { n: 1, label: 'Subject' },
+    { n: 2, label: 'Topics' },
+    { n: 3, label: 'Count' },
+  ];
+  document.getElementById('practice-stepper').innerHTML = steps.map((s, i) => {
+    const cls = practiceWizardStep === s.n ? 'active' : practiceWizardStep > s.n ? 'done' : '';
+    const arrow = i < steps.length - 1 ? '<span class="practice-step-arrow">›</span>' : '';
+    return `<div class="practice-step ${cls}"><span class="practice-step-num">${practiceWizardStep > s.n ? '✓' : s.n}</span>${s.label}</div>${arrow}`;
+  }).join('');
+  const backBtn = document.getElementById('practice-wizard-back');
+  const nextBtn = document.getElementById('practice-wizard-next');
+  if (backBtn) backBtn.style.display = practiceWizardStep === 1 ? 'none' : 'inline-flex';
+  if (nextBtn) {
+    nextBtn.textContent = practiceWizardStep === 3 ? 'Start practice' : 'Continue';
+    nextBtn.disabled = false;
+  }
+}
+
+function showPracticeWizardStep(step) {
+  practiceWizardStep = step;
+  ['practice-step-subject','practice-step-topics','practice-step-count'].forEach(id => {
+    document.getElementById(id).classList.remove('active');
+  });
+  document.getElementById(
+    step === 1 ? 'practice-step-subject' : step === 2 ? 'practice-step-topics' : 'practice-step-count'
+  ).classList.add('active');
+  renderPracticeStepper();
+}
+
+function renderPracticeSubjects() {
+  const chapters = EXAMS[currentExam].chapters;
+  const grid = document.getElementById('practice-subject-grid');
+  grid.innerHTML = EXAMS[currentExam].subjects.map(sub => {
+    const count = (chapters[sub] || []).length;
+    const sel = sub === currentPracticeSubject ? 'selected' : '';
+    return `<button type="button" class="practice-subject-card ${sel}" onclick="selectPracticeSubject('${sub.replace(/'/g, "\\'")}')">
+      <strong>${sub}</strong><span>${count} chapters</span>
+    </button>`;
+  }).join('');
+}
+
+function selectPracticeSubject(subject) {
+  currentPracticeSubject = subject;
+  renderPracticeSubjects();
+}
+
+function renderPracticeTopics() {
+  const topics = EXAMS[currentExam].chapters[currentPracticeSubject] || [];
+  practiceSelectedTopics = {};
+  topics.forEach(t => { practiceSelectedTopics[t] = true; });
+  document.getElementById('practice-selected-subject-label').textContent = currentPracticeSubject;
+  const grid = document.getElementById('practice-topic-grid');
+  grid.innerHTML = topics.map(t => {
+    const id = topicDomId(t);
+    return `<label class="topic-check checked" id="pt-${id}"><input type="checkbox" checked onchange="togglePracticeTopic('${escapeAttr(t)}')"> ${t}</label>`;
+  }).join('');
+}
+
+function topicDomId(t) { return t.replace(/[^a-zA-Z0-9]/g, '_'); }
+function escapeAttr(s) { return s.replace(/'/g, "\\'").replace(/"/g, '&quot;'); }
+
+function togglePracticeTopic(topic) {
+  practiceSelectedTopics[topic] = !practiceSelectedTopics[topic];
+  const el = document.getElementById('pt-' + topicDomId(topic));
+  if (el) el.classList.toggle('checked', practiceSelectedTopics[topic]);
+}
+
+function selectAllPracticeTopics() {
+  Object.keys(practiceSelectedTopics).forEach(t => { practiceSelectedTopics[t] = true; });
+  document.querySelectorAll('#practice-topic-grid .topic-check').forEach(el => {
+    el.classList.add('checked');
+    const inp = el.querySelector('input');
+    if (inp) inp.checked = true;
+  });
+}
+
+function getSelectedPracticeTopics() {
+  return Object.keys(practiceSelectedTopics).filter(t => practiceSelectedTopics[t]);
+}
+
+function renderPracticeCountStep() {
+  const topics = getSelectedPracticeTopics();
+  document.getElementById('practice-count-summary').innerHTML =
+    `<strong>${currentPracticeSubject}</strong> · ${topics.length} topic${topics.length !== 1 ? 's' : ''} selected · ${currentExam}`;
+  document.getElementById('practice-count-grid').innerHTML = PRACTICE_COUNT_OPTIONS.map(n => `
+    <button type="button" class="practice-count-btn ${n === practiceQuestionCount ? 'selected' : ''}" onclick="selectPracticeCount(${n})">
+      <strong>${n}</strong><span>questions</span>
+    </button>`).join('');
+}
+
+function selectPracticeCount(n) {
+  practiceQuestionCount = n;
+  renderPracticeCountStep();
+}
+
+function topicMatchesQuestion(selectedTopic, questionTopic) {
+  const a = selectedTopic.toLowerCase();
+  const b = questionTopic.toLowerCase();
+  return a === b || a.includes(b) || b.includes(a) ||
+    a.split(/[\s&/]+/).some(w => w.length > 3 && b.includes(w));
+}
+
+function buildPracticeQuestionPool(subject, topics, count) {
+  const pool = SAMPLE_QUESTIONS[subject] || SAMPLE_QUESTIONS['Mathematics'] || [];
+  let filtered = pool.filter(q => topics.some(t => topicMatchesQuestion(t, q.topic)));
+  if (!filtered.length) filtered = [...pool];
+  const result = [];
+  for (let i = 0; i < count; i++) {
+    const base = filtered[i % filtered.length];
+    result.push({ ...base, topic: topics[i % topics.length] || base.topic });
+  }
+  return result;
+}
+
+function practiceWizardNext() {
+  if (practiceWizardStep === 1) {
+    renderPracticeTopics();
+    showPracticeWizardStep(2);
+  } else if (practiceWizardStep === 2) {
+    const topics = getSelectedPracticeTopics();
+    if (!topics.length) {
+      alert('Please select at least one topic to practice.');
+      return;
+    }
+    renderPracticeCountStep();
+    showPracticeWizardStep(3);
+  } else if (practiceWizardStep === 3) {
+    startPracticeSession();
+  }
+}
+
+function practiceWizardBack() {
+  if (practiceWizardStep === 2) showPracticeWizardStep(1);
+  else if (practiceWizardStep === 3) {
+    renderPracticeTopics();
+    showPracticeWizardStep(2);
+  }
+}
+
+function startPracticeSession() {
+  const topics = getSelectedPracticeTopics();
+  if (!topics.length) return;
+  practiceSessionQuestions = buildPracticeQuestionPool(currentPracticeSubject, topics, practiceQuestionCount);
+  practiceSessionIdx = 0;
+  selectedAnswer = null;
+  showPracticeView('active');
+  const tagsEl = document.getElementById('practice-session-tags');
+  tagsEl.innerHTML = `
+    <span class="practice-session-tag">${currentExam}</span>
+    <span class="practice-session-tag">${currentPracticeSubject}</span>
+    ${topics.slice(0, 3).map(t => `<span class="practice-session-tag">${t}</span>`).join('')}
+    ${topics.length > 3 ? `<span class="practice-session-tag">+${topics.length - 3} more</span>` : ''}`;
+  document.getElementById('practice-q-total').textContent = practiceSessionQuestions.length;
+  renderPracticeSessionQuestion();
+}
+
+function renderPracticeSessionQuestion() {
+  if (practiceSessionIdx >= practiceSessionQuestions.length) {
+    finishPracticeSession();
+    return;
+  }
+  const q = practiceSessionQuestions[practiceSessionIdx];
+  selectedAnswer = null;
+  const total = practiceSessionQuestions.length;
+  const current = practiceSessionIdx + 1;
+  document.getElementById('practice-q-current').textContent = current;
+  document.getElementById('practice-session-fill').style.width = ((current - 1) / total * 100) + '%';
+  const nextBtn = document.getElementById('practice-next-btn');
+  if (nextBtn) nextBtn.textContent = current >= total ? 'Finish session' : 'Next question';
+  document.getElementById('practice-content').innerHTML = `
+    <div class="question-card">
+      <div class="q-meta">
+        <span class="q-tag q-tag-subject">${currentPracticeSubject}</span>
+        <span class="q-tag q-tag-topic">${q.topic}</span>
+        <span class="q-tag q-tag-diff">${q.diff}</span>
+      </div>
+      <div class="q-text">Q${current}. ${q.q}</div>
+      <div class="options">${q.opts.map((o, i) => `<button class="option" onclick="selectOption(${i},${q.ans})">(${['A','B','C','D'][i]}) ${o}</button>`).join('')}</div>
+      <div class="explanation" id="explanation"><strong>Explanation:</strong> ${q.exp}</div>
+    </div>`;
+}
+
+function nextPracticeQuestion() {
+  if (selectedAnswer === null) {
+    alert('Please select an answer before continuing.');
+    return;
+  }
+  practiceSessionIdx++;
+  if (practiceSessionIdx >= practiceSessionQuestions.length) {
+    finishPracticeSession();
+    return;
+  }
+  selectedAnswer = null;
+  renderPracticeSessionQuestion();
+  document.getElementById('explanation').style.display = 'none';
+}
+
+function finishPracticeSession() {
+  const total = practiceSessionQuestions.length;
+  const subject = currentPracticeSubject;
+  practiceSessionQuestions = [];
+  practiceSessionIdx = 0;
+  showPracticeSetupComplete(total, subject);
+}
+
+function endPracticeSession() {
+  if (!practiceSessionQuestions.length) { resetPracticeToSetup(); return; }
+  if (!confirm('End this practice session? Your remaining questions will be skipped.')) return;
+  practiceSessionQuestions = [];
+  practiceSessionIdx = 0;
+  resetPracticeToSetup();
+}
+
+function showPracticeSetupComplete(total, subject) {
+  showPracticeView('setup');
+  document.getElementById('practice-setup-view').innerHTML = `
+    <div class="practice-setup">
+      <i class="ti ti-circle-check test-complete-icon" style="font-size:52px;margin-bottom:16px" aria-hidden="true"></i>
+      <h3>Practice complete!</h3>
+      <p>You finished <strong style="color:var(--color-accent)">${total}</strong> questions on <strong>${subject}</strong>.</p>
+      <div style="display:flex;gap:10px;margin-top:24px;flex-wrap:wrap;justify-content:center">
+        <button class="btn-primary" onclick="openPracticeWizard()">Practice again</button>
+        <button class="btn-outline" onclick="restorePracticeSetupDefault()">Back to menu</button>
+      </div>
+    </div>`;
+}
+
+function restorePracticeSetupDefault() {
+  document.getElementById('practice-setup-view').innerHTML = `
+    <div class="practice-setup">
+      <span class="practice-exam-badge" id="practice-exam-badge"><i class="ti ti-certificate" aria-hidden="true"></i> ${currentExam}</span>
+      <div class="practice-setup-icon"><i class="ti ti-pencil" aria-hidden="true"></i></div>
+      <h3>Practice by topic</h3>
+      <p>Choose a subject, pick chapters you want to focus on, then set how many questions to practice.</p>
+      <button class="btn-primary" onclick="openPracticeWizard()" style="padding:12px 28px;font-size:13px">Start practice</button>
+    </div>`;
+  updatePracticeExamBadge();
 }
 
 function renderChapters() {
@@ -1301,31 +1923,10 @@ function renderChapters() {
   }).join('') + `<div class="syllabus-link" onclick="showPanel('syllabus', document.querySelector('[onclick*=syllabus]'))">View full syllabus →</div>`;
 }
 
-function renderPracticeQuestion() {
-  const qs = SAMPLE_QUESTIONS[currentPracticeSubject] || SAMPLE_QUESTIONS['Mathematics'];
-  const q = qs[practiceQIdx % qs.length];
-  selectedAnswer = null;
-  document.getElementById('practice-content').innerHTML = `
-    <div class="question-card">
-      <div class="q-meta">
-        <span class="q-tag q-tag-subject">${currentPracticeSubject}</span>
-        <span class="q-tag q-tag-topic">${q.topic}</span>
-        <span class="q-tag q-tag-diff">${q.diff}</span>
-      </div>
-      <div class="q-text">Q. ${q.q}</div>
-      <div class="options">${q.opts.map((o,i)=>`<button class="option" id="opt-${i}" onclick="selectOption(${i},${q.ans})">(${['A','B','C','D'][i]}) ${o}</button>`).join('')}</div>
-      <div class="explanation" id="explanation"><strong>Explanation:</strong> ${q.exp}</div>
-      <div class="q-actions">
-        <button class="btn-outline" onclick="toggleExplanation()">Show explanation</button>
-        <button class="btn-outline" onclick="sendPrompt('Give me a harder question on ${q.topic} for ${currentExam} exam')">More like this</button>
-      </div>
-    </div>`;
-}
-
 function selectOption(selected, correct) {
   if (selectedAnswer !== null) return;
   selectedAnswer = selected;
-  document.querySelectorAll('.option').forEach((o, i) => {
+  document.querySelectorAll('#practice-content .option').forEach((o, i) => {
     if (i === correct) o.classList.add('correct');
     else if (i === selected && selected !== correct) o.classList.add('wrong');
   });
@@ -1333,13 +1934,8 @@ function selectOption(selected, correct) {
 
 function toggleExplanation() {
   const el = document.getElementById('explanation');
+  if (!el) return;
   el.style.display = el.style.display === 'block' ? 'none' : 'block';
-}
-
-function loadPracticeQuestion() {
-  practiceQIdx++;
-  selectedAnswer = null;
-  renderPracticeQuestion();
 }
 
 function renderTopicChecks() {
@@ -1531,7 +2127,7 @@ renderChapters();
 renderTopicChecks();
 renderMaterials();
 renderSyllabus();
-renderPracticeQuestion();
+updatePracticeExamBadge();
 </script>
 </body>
 </html>
