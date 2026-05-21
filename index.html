@@ -8,6 +8,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
   <style>
     :root {
       --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
@@ -789,13 +791,198 @@
       background: rgba(157, 141, 247, 0.04);
     }
 
-    .upload-zone:hover {
+    .upload-zone:hover,
+    .upload-zone.dragover {
       background: var(--color-accent-soft);
       border-color: rgba(157, 141, 247, 0.4);
     }
 
     .upload-zone i { font-size: 32px; color: var(--color-accent); opacity: 0.8; }
     .upload-zone p { font-size: 13px; color: var(--color-text-secondary); margin-top: 10px; font-weight: 500; }
+
+    .material-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .material-card.uploaded { cursor: default; }
+    .material-card.recent-active {
+      border-color: rgba(157, 141, 247, 0.45);
+      box-shadow: 0 0 0 1px rgba(157, 141, 247, 0.15);
+    }
+
+    .material-card-actions {
+      display: flex;
+      gap: 6px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .material-card-actions button {
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border);
+      background: transparent;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      font-family: var(--font-sans);
+      transition: all 0.2s;
+    }
+
+    .material-card-actions button:hover {
+      background: var(--color-bg-hover);
+      color: var(--color-text-primary);
+    }
+
+    .material-card-actions button.primary-action {
+      border-color: rgba(157, 141, 247, 0.3);
+      color: var(--color-accent);
+      background: var(--color-accent-soft);
+    }
+
+    .material-summary-box {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid var(--color-border);
+      font-size: 12px;
+      line-height: 1.55;
+      color: var(--color-text-secondary);
+      display: none;
+    }
+
+    .material-summary-box.visible { display: block; }
+
+    .material-recent-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 99px;
+      background: var(--color-accent-soft);
+      color: var(--color-accent);
+      margin-bottom: 8px;
+    }
+
+    .material-empty {
+      text-align: center;
+      padding: 24px;
+      border: 1px dashed var(--color-border);
+      border-radius: var(--radius-md);
+      color: var(--color-text-muted);
+      font-size: 13px;
+      margin-bottom: 16px;
+    }
+
+    .material-context-bar {
+      display: none;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 20px;
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      background: var(--color-accent-soft);
+      border-bottom: 1px solid rgba(157, 141, 247, 0.2);
+      flex-wrap: wrap;
+    }
+
+    .material-context-bar.visible { display: flex; }
+
+    .material-context-bar i { color: var(--color-accent); font-size: 16px; }
+
+    .material-context-bar strong { color: var(--color-accent); }
+
+    .material-context-bar button {
+      margin-left: auto;
+      padding: 4px 10px;
+      font-size: 11px;
+      border: none;
+      background: transparent;
+      color: var(--color-text-muted);
+      cursor: pointer;
+      font-family: var(--font-sans);
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.65);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+
+    .modal-overlay.open { display: flex; }
+
+    .modal {
+      width: 100%;
+      max-width: 420px;
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-lg);
+      padding: 22px;
+      box-shadow: var(--shadow-md);
+      animation: fadeIn 0.2s ease;
+    }
+
+    .modal h3 {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 6px;
+      letter-spacing: -0.02em;
+    }
+
+    .modal-sub {
+      font-size: 12px;
+      color: var(--color-text-muted);
+      margin-bottom: 18px;
+      line-height: 1.5;
+    }
+
+    .modal-file-preview {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px;
+      border-radius: var(--radius-sm);
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--color-border);
+      margin-bottom: 16px;
+      font-size: 13px;
+      font-weight: 500;
+      word-break: break-all;
+    }
+
+    .modal-file-preview i { font-size: 22px; color: var(--color-accent); flex-shrink: 0; }
+
+    .modal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 18px;
+      justify-content: flex-end;
+    }
+
+    .upload-status {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      margin-top: 10px;
+      min-height: 18px;
+    }
+
+    .upload-status.error { color: var(--color-danger); }
+    .upload-status.success { color: var(--color-success); }
 
     /* YOUTUBE */
     .yt-grid { display: flex; flex-direction: column; gap: 10px; }
@@ -1276,6 +1463,12 @@
       </div>
     </header>
 
+    <div class="material-context-bar" id="material-context-bar">
+      <i class="ti ti-file-text" aria-hidden="true"></i>
+      <span>Active material for AI features: <strong id="context-material-name">—</strong> (<span id="context-material-meta">—</span>)</span>
+      <button type="button" onclick="clearRecentMaterial()">Clear</button>
+    </div>
+
     <div class="content">
       <div class="panel active" id="panel-dashboard">
         <div class="stats-grid">
@@ -1299,6 +1492,7 @@
 
       <div class="panel" id="panel-doubt">
         <div class="subject-chips" id="doubt-chips"></div>
+        <div id="doubt-material-hint" style="display:none;font-size:12px;color:var(--color-text-secondary);padding:10px 12px;margin-bottom:10px;border-radius:var(--radius-sm);background:var(--color-accent-soft);border:1px solid rgba(157,141,247,0.2);line-height:1.5"></div>
         <div class="chat-history" id="chat-history">
           <div class="chat-msg">
             <div class="chat-avatar avatar-ai">AI</div>
@@ -1405,13 +1599,25 @@
       </div>
 
       <div class="panel" id="panel-material">
-        <div class="upload-zone" onclick="triggerUpload()">
-          <i class="ti ti-upload" aria-hidden="true"></i>
-          <p>Upload study material (PDF, notes, images)</p>
-          <p style="font-size:11px;margin-top:6px;color:var(--color-text-muted)">Drag & drop or click to browse</p>
+        <div class="material-toolbar">
+          <div>
+            <div style="font-size:15px;font-weight:600;margin-bottom:4px">Study Material</div>
+            <div style="font-size:12px;color:var(--color-text-muted)">PDF or Word (.docx) — saved in your browser</div>
+          </div>
+          <button class="btn-primary" type="button" onclick="openFilePicker()" style="padding:10px 18px">
+            <i class="ti ti-upload" aria-hidden="true"></i> Upload
+          </button>
         </div>
-        <div class="section-title">Available resources</div>
-        <div class="material-grid" id="material-grid"></div>
+        <div class="upload-zone" id="upload-zone">
+          <i class="ti ti-upload" aria-hidden="true"></i>
+          <p>Drop PDF or Word file here</p>
+          <p style="font-size:11px;margin-top:6px;color:var(--color-text-muted)">or click Upload — .pdf and .docx only</p>
+        </div>
+        <input type="file" id="material-file-input" accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document" hidden>
+        <div class="section-title">Your uploads</div>
+        <div id="uploaded-materials-area"></div>
+        <div class="section-title" style="margin-top:8px">Sample resources</div>
+        <div class="material-grid" id="sample-material-grid"></div>
       </div>
 
       <div class="panel" id="panel-youtube">
@@ -1423,6 +1629,30 @@
       <div class="panel" id="panel-syllabus">
         <div id="syllabus-content"></div>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal-overlay" id="upload-modal">
+  <div class="modal" role="dialog" aria-labelledby="upload-modal-title">
+    <h3 id="upload-modal-title">Classify your file</h3>
+    <p class="modal-sub">Which exam and subject does this study material belong to?</p>
+    <div class="modal-file-preview" id="upload-modal-file">
+      <i class="ti ti-file" aria-hidden="true"></i>
+      <span>—</span>
+    </div>
+    <div class="form-group" style="margin-bottom:12px">
+      <label class="form-label">Exam</label>
+      <select id="upload-modal-exam" onchange="updateUploadModalSubjects()"></select>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Subject</label>
+      <select id="upload-modal-subject"></select>
+    </div>
+    <div class="upload-status" id="upload-modal-status"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" type="button" onclick="closeUploadModal()">Cancel</button>
+      <button class="btn-primary" type="button" id="upload-modal-confirm" onclick="confirmMaterialUpload()">Add material</button>
     </div>
   </div>
 </div>
@@ -1550,7 +1780,7 @@ const YT_VIDEOS = {
   ],
 };
 
-const MATERIALS = [
+const SAMPLE_MATERIALS = [
   {name:'NCERT Class XII Physics',meta:'PDF • 847 pages',icon:'ti-file-type-pdf',color:'rgba(240, 138, 138, 0.15)'},
   {name:'Inorganic Chemistry Notes',meta:'PDF • 124 pages',icon:'ti-notes',color:'rgba(110, 231, 168, 0.15)'},
   {name:'Math Formula Sheet',meta:'PDF • 32 pages',icon:'ti-math-function',color:'rgba(157, 141, 247, 0.15)'},
@@ -1558,6 +1788,14 @@ const MATERIALS = [
   {name:'Revision Flashcards',meta:'Card set • 240 cards',icon:'ti-cards',color:'rgba(110, 231, 168, 0.12)'},
   {name:'Mock Test Series',meta:'10 full-length tests',icon:'ti-clipboard-check',color:'rgba(157, 141, 247, 0.12)'},
 ];
+
+const STORAGE_MATERIALS_KEY = 'prepai_uploaded_materials';
+const STORAGE_RECENT_MATERIAL_KEY = 'prepai_recent_material_id';
+const MAX_STORED_TEXT = 45000;
+
+let uploadedMaterials = [];
+let recentMaterialId = null;
+let pendingUploadFile = null;
 
 let currentExam = 'CUET-UG';
 let currentDoubtSubject = 'Mathematics';
@@ -1576,8 +1814,10 @@ let testTimeLeft = 0;
 let topicChecked = {};
 
 function sendPrompt(msg) {
-  if (typeof window.sendPrompt === 'function') window.sendPrompt(msg);
-  else console.log('Prompt:', msg);
+  const ctx = getMaterialContext();
+  const full = ctx ? msg + '\n\n' + ctx : msg;
+  if (typeof window.sendPrompt === 'function') window.sendPrompt(full);
+  else console.log('Prompt:', full);
 }
 
 function setExam(el, exam) {
@@ -1592,6 +1832,8 @@ function setExam(el, exam) {
   renderSyllabus();
   updateStats();
   updatePracticeExamBadge();
+  updateMaterialContextBanner();
+  updateDoubtMaterialHint();
   if (!practiceSessionQuestions.length) resetPracticeToSetup();
 }
 
@@ -1604,6 +1846,9 @@ function showPanel(id, navEl) {
   document.getElementById('topbar-title').textContent = titles[id] || id;
   if (id === 'youtube') renderYTSuggestions();
   if (id === 'practice') renderPracticePanel();
+  if (id === 'material') renderMaterials();
+  updateMaterialContextBanner();
+  updateDoubtMaterialHint();
 }
 
 function renderChips() {
@@ -1752,8 +1997,12 @@ function getSelectedPracticeTopics() {
 
 function renderPracticeCountStep() {
   const topics = getSelectedPracticeTopics();
+  const m = getRecentMaterial();
+  const matLine = m
+    ? `<br><span style="color:var(--color-accent)"><i class="ti ti-file-text"></i> AI will use: ${escapeHtml(m.name)} (${escapeHtml(m.exam)}, ${escapeHtml(m.subject)})</span>`
+    : '';
   document.getElementById('practice-count-summary').innerHTML =
-    `<strong>${currentPracticeSubject}</strong> · ${topics.length} topic${topics.length !== 1 ? 's' : ''} selected · ${currentExam}`;
+    `<strong>${currentPracticeSubject}</strong> · ${topics.length} topic${topics.length !== 1 ? 's' : ''} selected · ${currentExam}${matLine}`;
   document.getElementById('practice-count-grid').innerHTML = PRACTICE_COUNT_OPTIONS.map(n => `
     <button type="button" class="practice-count-btn ${n === practiceQuestionCount ? 'selected' : ''}" onclick="selectPracticeCount(${n})">
       <strong>${n}</strong><span>questions</span>
@@ -1817,11 +2066,13 @@ function startPracticeSession() {
   selectedAnswer = null;
   showPracticeView('active');
   const tagsEl = document.getElementById('practice-session-tags');
+  const recentMat = getRecentMaterial();
   tagsEl.innerHTML = `
     <span class="practice-session-tag">${currentExam}</span>
     <span class="practice-session-tag">${currentPracticeSubject}</span>
     ${topics.slice(0, 3).map(t => `<span class="practice-session-tag">${t}</span>`).join('')}
-    ${topics.length > 3 ? `<span class="practice-session-tag">+${topics.length - 3} more</span>` : ''}`;
+    ${topics.length > 3 ? `<span class="practice-session-tag">+${topics.length - 3} more</span>` : ''}
+    ${recentMat ? `<span class="practice-session-tag"><i class="ti ti-file-text"></i> ${escapeHtml(recentMat.name)}</span>` : ''}`;
   document.getElementById('practice-q-total').textContent = practiceSessionQuestions.length;
   renderPracticeSessionQuestion();
 }
@@ -2033,8 +2284,276 @@ function renderYTSuggestions() {
 
 function loadYTSuggestions() { renderYTSuggestions(); }
 
+function loadUploadedMaterials() {
+  try {
+    uploadedMaterials = JSON.parse(localStorage.getItem(STORAGE_MATERIALS_KEY) || '[]');
+    recentMaterialId = localStorage.getItem(STORAGE_RECENT_MATERIAL_KEY);
+    if (recentMaterialId && !uploadedMaterials.find(m => m.id === recentMaterialId)) {
+      recentMaterialId = uploadedMaterials[0]?.id || null;
+    }
+  } catch {
+    uploadedMaterials = [];
+    recentMaterialId = null;
+  }
+}
+
+function saveUploadedMaterials() {
+  try {
+    localStorage.setItem(STORAGE_MATERIALS_KEY, JSON.stringify(uploadedMaterials));
+    if (recentMaterialId) localStorage.setItem(STORAGE_RECENT_MATERIAL_KEY, recentMaterialId);
+    else localStorage.removeItem(STORAGE_RECENT_MATERIAL_KEY);
+  } catch (e) {
+    alert('Could not save material — browser storage may be full. Try a smaller file.');
+  }
+}
+
+function getRecentMaterial() {
+  return uploadedMaterials.find(m => m.id === recentMaterialId) || null;
+}
+
+function getMaterialContext() {
+  const m = getRecentMaterial();
+  if (!m || !m.textContent) return '';
+  const excerpt = m.textContent.slice(0, 5000);
+  const summaryPart = m.summary ? `\nSummary:\n${m.summary}\n` : '';
+  return `\n\n--- Uploaded study material (use this when relevant) ---
+File: ${m.name}
+Exam: ${m.exam} | Subject: ${m.subject}
+${summaryPart}
+Content excerpt:
+${excerpt}
+--- End uploaded material ---`;
+}
+
+function getContextAwareSystemPrompt(base) {
+  const ctx = getMaterialContext();
+  if (!ctx) return base;
+  return base + '\n\nThe student has uploaded study material. Prefer answers grounded in this material when relevant:' + ctx;
+}
+
+function updateMaterialContextBanner() {
+  const bar = document.getElementById('material-context-bar');
+  const m = getRecentMaterial();
+  if (!bar) return;
+  if (m) {
+    bar.classList.add('visible');
+    document.getElementById('context-material-name').textContent = m.name;
+    document.getElementById('context-material-meta').textContent = `${m.exam} · ${m.subject}`;
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+function updateDoubtMaterialHint() {
+  const m = getRecentMaterial();
+  const el = document.getElementById('doubt-material-hint');
+  if (!el) return;
+  if (m) {
+    el.style.display = 'block';
+    el.innerHTML = `<i class="ti ti-file-text" aria-hidden="true"></i> Answers will also use your uploaded material: <strong>${escapeHtml(m.name)}</strong> (${escapeHtml(m.exam)}, ${escapeHtml(m.subject)})`;
+  } else {
+    el.style.display = 'none';
+  }
+}
+
+function setRecentMaterial(id) {
+  recentMaterialId = id;
+  saveUploadedMaterials();
+  renderMaterials();
+  updateMaterialContextBanner();
+  updateDoubtMaterialHint();
+}
+
+function clearRecentMaterial() {
+  recentMaterialId = null;
+  saveUploadedMaterials();
+  renderMaterials();
+  updateMaterialContextBanner();
+  updateDoubtMaterialHint();
+}
+
+function isAllowedMaterialFile(file) {
+  const name = file.name.toLowerCase();
+  return name.endsWith('.pdf') || name.endsWith('.docx') ||
+    file.type === 'application/pdf' ||
+    file.type === 'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+}
+
+function openFilePicker() {
+  document.getElementById('material-file-input').click();
+}
+
+function handleMaterialFile(file) {
+  if (!file) return;
+  if (!isAllowedMaterialFile(file)) {
+    alert('Only PDF (.pdf) and Word (.docx) files are supported.');
+    return;
+  }
+  if (file.size > 8 * 1024 * 1024) {
+    alert('File is too large. Please use a file under 8 MB.');
+    return;
+  }
+  pendingUploadFile = file;
+  showUploadModal(file);
+}
+
+function showUploadModal(file) {
+  const modal = document.getElementById('upload-modal');
+  const icon = file.name.toLowerCase().endsWith('.pdf') ? 'ti-file-type-pdf' : 'ti-file-type-doc';
+  document.getElementById('upload-modal-file').innerHTML =
+    `<i class="ti ${icon}" aria-hidden="true"></i><span>${escapeHtml(file.name)}</span>`;
+  document.getElementById('upload-modal-status').textContent = '';
+  document.getElementById('upload-modal-status').className = 'upload-status';
+  const examSel = document.getElementById('upload-modal-exam');
+  examSel.innerHTML = Object.keys(EXAMS).map(e =>
+    `<option value="${e}" ${e === currentExam ? 'selected' : ''}>${e}</option>`).join('');
+  updateUploadModalSubjects();
+  modal.classList.add('open');
+}
+
+function updateUploadModalSubjects() {
+  const exam = document.getElementById('upload-modal-exam').value;
+  const subjSel = document.getElementById('upload-modal-subject');
+  const subjects = EXAMS[exam]?.subjects || [];
+  const defaultSub = subjects.includes(currentPracticeSubject) ? currentPracticeSubject : subjects[0];
+  subjSel.innerHTML = subjects.map(s =>
+    `<option value="${s}" ${s === defaultSub ? 'selected' : ''}>${s}</option>`).join('');
+}
+
+function closeUploadModal() {
+  document.getElementById('upload-modal').classList.remove('open');
+  pendingUploadFile = null;
+  document.getElementById('material-file-input').value = '';
+}
+
+async function extractPdfText(file) {
+  if (!window.pdfjsLib) throw new Error('PDF library not loaded');
+  pdfjsLib.GlobalWorkerOptions.workerSrc =
+    'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+  const data = await file.arrayBuffer();
+  const pdf = await pdfjsLib.getDocument({ data }).promise;
+  let text = '';
+  const maxPages = Math.min(pdf.numPages, 40);
+  for (let i = 1; i <= maxPages; i++) {
+    const page = await pdf.getPage(i);
+    const content = await page.getTextContent();
+    text += content.items.map(it => it.str).join(' ') + '\n';
+  }
+  return text.trim();
+}
+
+async function extractDocxText(file) {
+  if (!window.mammoth) throw new Error('Word library not loaded');
+  const arrayBuffer = await file.arrayBuffer();
+  const result = await mammoth.extractRawText({ arrayBuffer });
+  return (result.value || '').trim();
+}
+
+async function extractTextFromFile(file) {
+  const name = file.name.toLowerCase();
+  if (name.endsWith('.pdf') || file.type === 'application/pdf') return extractPdfText(file);
+  return extractDocxText(file);
+}
+
+async function confirmMaterialUpload() {
+  if (!pendingUploadFile) return;
+  const statusEl = document.getElementById('upload-modal-status');
+  const btn = document.getElementById('upload-modal-confirm');
+  const exam = document.getElementById('upload-modal-exam').value;
+  const subject = document.getElementById('upload-modal-subject').value;
+  statusEl.textContent = 'Reading file…';
+  statusEl.className = 'upload-status';
+  btn.disabled = true;
+
+  try {
+    let textContent = await extractTextFromFile(pendingUploadFile);
+    if (!textContent || textContent.length < 20) {
+      throw new Error('Could not extract enough text. Try a different PDF or save Word as .docx.');
+    }
+    if (textContent.length > MAX_STORED_TEXT) {
+      textContent = textContent.slice(0, MAX_STORED_TEXT) + '\n\n[Text truncated for storage]';
+    }
+    const isPdf = pendingUploadFile.name.toLowerCase().endsWith('.pdf');
+    const material = {
+      id: 'mat_' + Date.now(),
+      name: pendingUploadFile.name,
+      exam,
+      subject,
+      type: isPdf ? 'pdf' : 'docx',
+      textContent,
+      summary: '',
+      uploadedAt: new Date().toISOString(),
+    };
+    uploadedMaterials.unshift(material);
+    recentMaterialId = material.id;
+    saveUploadedMaterials();
+    closeUploadModal();
+    renderMaterials();
+    updateMaterialContextBanner();
+    updateDoubtMaterialHint();
+    showPanel('material', document.querySelector('.nav-item:nth-child(5)'));
+    statusEl.textContent = '';
+  } catch (err) {
+    statusEl.textContent = err.message || 'Upload failed.';
+    statusEl.className = 'upload-status error';
+  }
+  btn.disabled = false;
+}
+
+async function summarizeMaterial(id) {
+  const m = uploadedMaterials.find(x => x.id === id);
+  if (!m) return;
+  const btn = document.querySelector(`[data-summarize="${id}"]`);
+  if (btn) { btn.disabled = true; btn.textContent = 'Summarizing…'; }
+  const text = (m.textContent || '').slice(0, 14000);
+  try {
+    const systemPrompt = `Summarize this study material for a ${m.exam} exam student (${m.subject}). Include: main topics, key formulas/definitions, and 3-5 bullet takeaways. Under 200 words.`;
+    const response = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        model: 'claude-sonnet-4-20250514',
+        max_tokens: 800,
+        system: systemPrompt,
+        messages: [{ role: 'user', content: text }]
+      })
+    });
+    const data = await response.json();
+    m.summary = data.content?.map(c => c.text || '').join('') || 'Summary unavailable.';
+    saveUploadedMaterials();
+    renderMaterials();
+    if (recentMaterialId === id) updateMaterialContextBanner();
+  } catch {
+    m.summary = 'Could not generate summary. Check your connection and try again.';
+    saveUploadedMaterials();
+    renderMaterials();
+  }
+  if (btn) { btn.disabled = false; btn.textContent = 'Summarize'; }
+}
+
+function deleteMaterial(id) {
+  if (!confirm('Remove this uploaded material from storage?')) return;
+  uploadedMaterials = uploadedMaterials.filter(m => m.id !== id);
+  if (recentMaterialId === id) recentMaterialId = uploadedMaterials[0]?.id || null;
+  saveUploadedMaterials();
+  renderMaterials();
+  updateMaterialContextBanner();
+  updateDoubtMaterialHint();
+}
+
+function toggleMaterialSummary(id) {
+  const box = document.getElementById('summary-' + id);
+  if (box) box.classList.toggle('visible');
+}
+
 function renderMaterials() {
-  document.getElementById('material-grid').innerHTML = MATERIALS.map(m => `
+  const uploadedArea = document.getElementById('uploaded-materials-area');
+  if (!uploadedMaterials.length) {
+    uploadedArea.innerHTML = `<div class="material-empty">No uploads yet. Click <strong>Upload</strong> or drop a PDF / Word file above.</div>`;
+  } else {
+    uploadedArea.innerHTML = `<div class="material-grid">${uploadedMaterials.map(renderUploadedMaterialCard).join('')}</div>`;
+  }
+  document.getElementById('sample-material-grid').innerHTML = SAMPLE_MATERIALS.map(m => `
     <div class="material-card">
       <div class="material-icon-wrap" style="background:${m.color}"><i class="ti ${m.icon}" aria-hidden="true"></i></div>
       <div class="material-name">${m.name}</div>
@@ -2042,8 +2561,29 @@ function renderMaterials() {
     </div>`).join('');
 }
 
-function triggerUpload() {
-  sendPrompt('I want to upload study material. What file formats can I upload?');
+function renderUploadedMaterialCard(m) {
+  const isRecent = m.id === recentMaterialId;
+  const icon = m.type === 'pdf' ? 'ti-file-type-pdf' : 'ti-file-type-doc';
+  const color = m.type === 'pdf' ? 'rgba(240, 138, 138, 0.15)' : 'rgba(157, 141, 247, 0.15)';
+  const date = new Date(m.uploadedAt).toLocaleDateString();
+  const chars = (m.textContent || '').length;
+  const summaryHtml = m.summary
+    ? `<div class="material-summary-box visible" id="summary-${m.id}">${escapeHtml(m.summary)}</div>`
+    : `<div class="material-summary-box" id="summary-${m.id}"></div>`;
+  return `
+    <div class="material-card uploaded ${isRecent ? 'recent-active' : ''}">
+      ${isRecent ? '<span class="material-recent-badge"><i class="ti ti-star" aria-hidden="true"></i> Active for AI</span>' : ''}
+      <div class="material-icon-wrap" style="background:${color}"><i class="ti ${icon}" aria-hidden="true"></i></div>
+      <div class="material-name">${escapeHtml(m.name)}</div>
+      <div class="material-meta">${m.exam} · ${m.subject} · ${m.type.toUpperCase()} · ${date} · ${chars.toLocaleString()} chars</div>
+      ${summaryHtml}
+      <div class="material-card-actions">
+        ${!isRecent ? `<button type="button" class="primary-action" onclick="setRecentMaterial('${m.id}')">Use in AI</button>` : ''}
+        <button type="button" data-summarize="${m.id}" onclick="summarizeMaterial('${m.id}')">${m.summary ? 'Re-summarize' : 'Summarize'}</button>
+        ${m.summary ? `<button type="button" onclick="toggleMaterialSummary('${m.id}')">Toggle summary</button>` : ''}
+        <button type="button" onclick="deleteMaterial('${m.id}')">Delete</button>
+      </div>
+    </div>`;
 }
 
 function renderSyllabus() {
@@ -2089,8 +2629,11 @@ async function sendDoubt() {
   history.scrollTop = history.scrollHeight;
 
   try {
-    const systemPrompt = `You are an expert AI tutor for Indian competitive exams (${currentExam}). Subject focus: ${currentDoubtSubject}.
-Answer doubts clearly and concisely with a direct explanation, key formula if applicable, and a quick example. Keep under 150 words.`;
+    const systemPrompt = getContextAwareSystemPrompt(
+      `You are an expert AI tutor for Indian competitive exams (${currentExam}). Subject focus: ${currentDoubtSubject}.
+Answer doubts clearly and concisely with a direct explanation, key formula if applicable, and a quick example. Keep under 150 words.
+When uploaded study material is provided, use it to give more accurate, material-specific answers.`
+    );
     const response = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -2122,12 +2665,38 @@ document.getElementById('doubt-input').addEventListener('keydown', e => {
   if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendDoubt(); }
 });
 
+document.getElementById('material-file-input').addEventListener('change', e => {
+  const file = e.target.files?.[0];
+  if (file) handleMaterialFile(file);
+});
+
+const uploadZone = document.getElementById('upload-zone');
+uploadZone.addEventListener('click', () => openFilePicker());
+uploadZone.addEventListener('dragover', e => {
+  e.preventDefault();
+  uploadZone.classList.add('dragover');
+});
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('dragover'));
+uploadZone.addEventListener('drop', e => {
+  e.preventDefault();
+  uploadZone.classList.remove('dragover');
+  const file = e.dataTransfer.files?.[0];
+  if (file) handleMaterialFile(file);
+});
+
+document.getElementById('upload-modal').addEventListener('click', e => {
+  if (e.target.id === 'upload-modal') closeUploadModal();
+});
+
+loadUploadedMaterials();
 renderChips();
 renderChapters();
 renderTopicChecks();
 renderMaterials();
 renderSyllabus();
 updatePracticeExamBadge();
+updateMaterialContextBanner();
+updateDoubtMaterialHint();
 </script>
 </body>
 </html>
